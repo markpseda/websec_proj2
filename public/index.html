@@ -3,25 +3,27 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+    <title>Authenticator 101</title>
     <script defer src="/__/firebase/5.5.4/firebase-app.js"></script>
     <script defer src="/__/firebase/5.5.4/firebase-database.js"></script>
     <script defer src="/__/firebase/5.5.4/firebase-auth.js"></script>
     <script defer src="/__/firebase/init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./index.js"></script>
   </head>
   <body>
-    <h2>People Online:</h2>
-    <ul id="people"></ul>
-    <div id="authstuff">
-    </div>
-    <div id="namestuff">
-      <input type="text" id="myname" placeholder="Hi, my name is" />
-      <button type="button" id="join">Click to join</button>
-      <button type="button" id="leave">Click to leave</button>
-      <button type="button" id="edit">Click to change your name</button>
-    </div>
+    <h2> Mark's Incredible Test System</h2>
     <script>
+      console.log("THIS IS A TEST");
+    </script>
+    <form name = "registerForm" action="">
+      email:<br> <input id="emailInput" type="email" name="email" required/> <br>
+      password:<br><input id="passwordInput" type="password" name="password" required/> <br>
+      <input id="loginSubmitButton" type="button" value="Login" onclick="loginUser()"/> <br>
+      <input id="registerSubmitButton" type="button" value="Register" onclick="registerUser()"/>
+    </form>
+    <script>
+      /*
     $(document).ready(function(){
   var theDB = firebase.database();
   var provider = new firebase.auth.GoogleAuthProvider();
@@ -80,7 +82,9 @@
       }
     }
   });
+  
     });
+    */
     </script>
   </body>
 </html>
