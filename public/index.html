@@ -13,11 +13,11 @@
   <body>
     <h2> Mark's Incredible Authentication System</h2>
     <form id = "registerForm" action="">
-      Welcome to my website! Please enter your credentials below to sign in or create a new account!
+      Welcome to my website! Please enter your credentials below to sign in or create a new account!<br>
       <input id="emailInput" type="email" name="email" placeholder="email" required/> <br>
       <input id="passwordInput" type="password" name="password" placeholder="password" required/> <br>
       <input id="loginSubmitButton" type="submit" value="Login"/>
-      <input id="registerSubmitButton" type="submit" value="Register"/>
+      <input id="registerSubmitButton" type="submit" value="Register"/><br>
     </form>
 
     <p id="welcomeMessage" style="display:none">
@@ -33,20 +33,20 @@
 
     <div id="resetPassword" style="display:none">
       <p id = "resetPasswordPrompt">
-        If you would like to reset your password, click <span id="resetPasswordLink"> here</span>.
+        If you would like to reset your password, click <span style="text-decoration: underline" id="resetPasswordLink" > here</a>.
       </p>
-      <form name = "resetPasswordForm">
+      <form name = "resetPasswordForm" style="display:none">
         Please enter your old and new passwords below: <br>
         <input id="oldPassword" type="password" placeholder="Old Password" required/> <br>
         <input id="newPassword" type="password" placeholder="New Password" required/> <br>
         <input id="resetPasswordSubmitButton" type="submit" value="Reset Password"/> <br>
       </form>
 
-      <p id = "resetPasswordSuccess">
+      <p id = "resetPasswordSuccess" style="display:none">
         Your updated password has been accepted! Thank you.
       </p>
 
-      <p id = "resetPasswordFailure">
+      <p id = "resetPasswordFailure" style="display:none">
         Your new password was not accepted. Make sure your old password was correct and your new password is complex enough.
       </p>
     </div>

@@ -11,23 +11,11 @@ var config = {
 
 
 window.onload = function (){
-    var email = document.getElementById("emailInput");
-    var password = document.getElementById("passwordInput");
-    var login = document.getElementById("loginSubmitButton");
-    var register = document.getElementById("registerSubmitButton");
-    var signout = document.getElementById("signoutSubmitButton");
-
-    signout.style="display:none";
     $("#welcomeMessage").hide();
-
-
+    $("#signout").hide();
 
 
     console.log("Performed onload function");
-    //login.addEventListener("click", loginUser());
-    //register.addEventListener("click", registerUser());
-    //signout.addEventListener("click", signout());
-
 }
 
 // wait until dom is loaded
@@ -83,6 +71,15 @@ $(function(){
 
     });
 
+
+    $("#resetPasswordLink").click(function(event){
+        console.log("Enable resetting password");
+
+        $("#resetPasswordPrompt").hide();
+        $("#resetPasswordForm").show();
+    });
+
+    // handle user signin/outs
     firebase.auth().onAuthStateChanged(function(user){
         // user just signed in
         if(user)
@@ -102,17 +99,22 @@ $(function(){
             // in case this was enabled earlier
             $("#unableToLogIn").hide();
 
-            
+            // now user could reset password
+            $("#resetPassword").show();
+            $("#resetPasswordPrompt").show();
+
         }
         else //user just signed out
         {
             console.log("Goodbye!");
-            // hide welcome message and remove userName value
+            // hide welcome message (and other content) and remove userName value
             $("#welcomeMessage").hide();
             $("#userName").text("");
             $("#signoutSubmitButton").hide();
+            $("#resetPassword").hide();
             // bring back the sign in form
             $("#registerForm").show();
+
         }
     });
 
