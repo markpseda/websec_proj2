@@ -12,13 +12,44 @@
   </head>
   <body>
     <h2> Mark's Incredible Authentication System</h2>
-    <form name = "registerForm" action="">
-      <input id="emailInput" type="email" name="email" default="email" required/> <br>
-      <input id="passwordInput" type="password" name="password" default="password" required/> <br>
-      <input id="loginSubmitButton" type="submit" value="Login"/> <br>
+    <form id = "registerForm" action="">
+      Welcome to my website! Please enter your credentials below to sign in or create a new account!
+      <input id="emailInput" type="email" name="email" placeholder="email" required/> <br>
+      <input id="passwordInput" type="password" name="password" placeholder="password" required/> <br>
+      <input id="loginSubmitButton" type="submit" value="Login"/>
       <input id="registerSubmitButton" type="submit" value="Register"/>
-      <input id="signoutSubmitButton" type="button" value="Logout"/>
     </form>
+
+    <p id="welcomeMessage" style="display:none">
+      Welcome <span id="userName"></span>! I am so glad to have you here at my website!
+    </p>
+
+    <p id="unableToLogIn" style="display:none">
+        Invalid Sign In: <br> <span id="failedLoginReason"></span>
+    </p>
+
+    <input id="signoutSubmitButton" type="button" value="Logout"/>
+
+
+    <div id="resetPassword" style="display:none">
+      <p id = "resetPasswordPrompt">
+        If you would like to reset your password, click <span id="resetPasswordLink"> here</span>.
+      </p>
+      <form name = "resetPasswordForm">
+        Please enter your old and new passwords below: <br>
+        <input id="oldPassword" type="password" placeholder="Old Password" required/> <br>
+        <input id="newPassword" type="password" placeholder="New Password" required/> <br>
+        <input id="resetPasswordSubmitButton" type="submit" value="Reset Password"/> <br>
+      </form>
+
+      <p id = "resetPasswordSuccess">
+        Your updated password has been accepted! Thank you.
+      </p>
+
+      <p id = "resetPasswordFailure">
+        Your new password was not accepted. Make sure your old password was correct and your new password is complex enough.
+      </p>
+    </div>
 
     <!-- Load JS after html file has been loaded fully -->
     <script type="text/javascript" src="./app.js"></script>
