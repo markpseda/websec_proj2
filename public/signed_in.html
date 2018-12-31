@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Authenticator 101</title>
+    <script defer src="/__/firebase/5.5.4/firebase-app.js"></script>
+    <script defer src="/__/firebase/5.5.4/firebase-database.js"></script>
+    <script defer src="/__/firebase/5.5.4/firebase-auth.js"></script>
+    <script defer src="/__/firebase/init.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <h2>
+        Welcome to an Exclusive Page
+    </h2>
+    <p>
+        Only signed in users can view this page's contents below!
+    </p>
+
+    <p id="secretContent" style="display:none">
+        The answer to the universe is 42.
+    </p>
+
+    <p id="whyAreYouHere" style="display:none">
+        You are not supposed to be here... go back and sign in
+    </p>
+
+    <a href="index.html"> Go Back </a>
+</body>
+<script>
+    // at page load simply test if user is signed in, nothing more.
+    window.onload = function () {
+
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                $("#secretContent").show();
+                $("#whyAreYouHere").hide();
+            } else {
+                $("#whyAreYouHere").show();
+                $("#secretContent").hide();
+                console.log("Someone tryna be sneaky");
+            }
+        });
+
+    }
+</script>
+
+</html>

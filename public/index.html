@@ -12,6 +12,7 @@
   </head>
   <body>
     <h2> Mark's Incredible Authentication System</h2>
+
     <form id = "registerForm" action="">
       Welcome to my website! Please enter your credentials below to sign in or create a new account!<br>
       <input id="emailInput" type="email" name="email" placeholder="email" required/> <br>
@@ -19,6 +20,13 @@
       <input id="loginSubmitButton" type="submit" value="Login"/>
       <input id="registerSubmitButton" type="submit" value="Register"/><br>
     </form>
+
+    <div id="oAuthSection">
+      <p>
+        You can also sign in using Facebook:
+      </p>
+      <input id="facebookLogin" type="button" value="Login with Facebook"/>
+    </div>
 
     <p id="welcomeMessage" style="display:none">
       Welcome <span id="userName"></span>! I am so glad to have you here at my website!
@@ -51,7 +59,13 @@
       </p>
     </div>
 
-    
+
+
+    <p id="secretPageText" style="display:none">
+      Click <span id="secretPageLink" style="text-decoration: underline">here</span> to view a secret page!
+    </p>
+
+
 
     <!-- Load JS after html file has been loaded fully -->
     <script type="text/javascript" src="./app.js"></script>

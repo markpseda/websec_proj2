@@ -33,7 +33,7 @@ $(function () {
             console.log(errorCode);
             console.log(errorMessage);
 
-            $("#failedLoginReason").text(error.message);
+            $("#failedLoginReason").text(errorMessage);
             $("#unableToLogIn").show();
         });
     });
@@ -53,7 +53,7 @@ $(function () {
             console.log(errorCode);
             console.log(errorMessage);
 
-            $("#failedLoginReason").text(error.message);
+            $("#failedLoginReason").text(errorMessage);
             $("#unableToLogIn").show();
         });
     });
@@ -108,16 +108,71 @@ $(function () {
         });
     });
 
+    $("#secretPageLink").click(function (event) {
+        console.log("Accessing Secret Page");
+        window.location.pathname = "signed_in.html";
+        
+    });
+
+    $("#facebookLogin").click(function (event) {
+        console.log("Logging in via facebook...");
+        var provider = new firebase.auth.FacebookAuthProvider();
+
+        //provider.addScope('default');
+
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+            //var token = result.credential.accessToken;
+            // The signed-in user info.
+            //var user = result.user;
+            //console.log(user);
+
+            //console.log
+
+            //userPicture=user.picture;
+            // ...
+          }).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // The email of the user's account used.
+
+            console.log(error.code);
+            console.log(error.message);
+            $("#failedLoginReason").text(errorMessage);
+            $("#unableToLogIn").show();
+            
+          });
+        
+    });
+
     // handle user signin/outs
     firebase.auth().onAuthStateChanged(function (user) {
         // user just signed in
         if (user) {
+            console.log("OnAuthStateChanged");
+            console.log(user);
             console.log("Welcome " + user.email + "!");
+            console.log(user.first_name);
+            console.log(user.picture);
             // set username id values to th email (for now)
-            $("#userName").text(user.email);
+
+            // only present for oauth
+            if(user.displayName != null)
+            {
+                $("#userName").text(user.displayName);
+            }
+            else // email always available
+            {
+                $("#userName").text(user.email);
+            }
+
+
+            
 
             // hide the sign in form
             $("#registerForm").hide();
+            $("#oAuthSection").hide();
 
             // display the welcome message
             $("#welcomeMessage").show();
@@ -131,6 +186,8 @@ $(function () {
             $("#resetPassword").show();
             $("#resetPasswordPrompt").show();
 
+            // user can see secret page
+            $("#secretPageText").show();
         }
         else //user just signed out
         {
@@ -142,6 +199,10 @@ $(function () {
             $("#resetPassword").hide();
             // bring back the sign in form
             $("#registerForm").show();
+            $("#oAuthSection").show();
+
+            // user cannot see secret page
+            $("#secretPageText").hide();
         }
     });
 
