@@ -1,73 +1,120 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Authenticator 101</title>
-    <script defer src="/__/firebase/5.5.4/firebase-app.js"></script>
-    <script defer src="/__/firebase/5.5.4/firebase-database.js"></script>
-    <script defer src="/__/firebase/5.5.4/firebase-auth.js"></script>
-    <script defer src="/__/firebase/init.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  </head>
-  <body>
-    <h2> Mark's Incredible Authentication System</h2>
 
-    <form id = "registerForm" action="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Authenticator 101</title>
+  <script src="/__/firebase/5.5.4/firebase-app.js"></script>
+  <script src="/__/firebase/5.5.4/firebase-database.js"></script>
+  <script src="/__/firebase/5.5.4/firebase-auth.js"></script>
+  <script src="/__/firebase/init.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+
+  <style>
+    button.asText {
+      background:none;
+      border:none;
+      margin:0;
+      padding:0;
+      text-decoration: underline;
+    }
+
+  </style>
+</head>
+
+<body>
+  <h3> Mark's Incredible Authentication System</h3>
+
+  <main>
+
+    <form id="registerForm" action="">
       Welcome to my website! Please enter your credentials below to sign in or create a new account!<br>
-      <input id="emailInput" type="email" name="email" placeholder="email" required/> <br>
-      <input id="passwordInput" type="password" name="password" placeholder="password" required/> <br>
-      <input id="loginSubmitButton" type="submit" value="Login"/>
-      <input id="registerSubmitButton" type="submit" value="Register"/><br>
+      <input id="emailInput" type="email" name="email" placeholder="email" required /> <br>
+      <input id="passwordInput" type="password" name="password" placeholder="password" required /> <br>
+      <input id="loginSubmitButton" type="submit" value="Login" />
+      <input id="registerSubmitButton" type="submit" value="Register" /><br>
     </form>
 
     <div id="oAuthSection">
       <p>
-        You can also sign in using Facebook:
+        You can also sign in using Facebook or Google:
       </p>
-      <input id="facebookLogin" type="button" value="Login with Facebook"/>
+      <input id="facebookLogin" type="button" value="Login with Facebook" />
+      <input id="googleLogin" type="button" value="Login with Google" />
     </div>
 
-    <p id="welcomeMessage" style="display:none">
-      Welcome <span id="userName"></span>! I am so glad to have you here at my website!
-    </p>
-
     <p id="unableToLogIn" style="display:none">
-        Invalid Sign In: <br> <span id="failedLoginReason"></span>
+      Invalid Sign In: <br> <span id="failedLoginReason"></span>
     </p>
 
-    <input id="signoutSubmitButton" type="button" value="Logout"/>
+    <div id="welcomeMessage">
+      <p>
+        Welcome <span id="userName"></span>! I am so glad to have you here at my website! <br>
+        The email address tied to this account is <span id="userEmail"></span>. <br>
+        The sign-in methods connected to this account are:
+      </p>
+
+      <ul id="signInMethod"></ul>
+
+      <!-- Hide image by default, only add if available-->
+      <img src="" id="userImage" style="display:none">
+
+      <p id="multipleSignInsPrompt">
+        If you want to add additional sign in methods, click <button class="asText" id="moreSignInMethods">here</button>. <br>
+        Currently, only one sign in method is allowed per email address.
+      </p>
+
+      <p id="multipleSignIns" style="display:none">
+        TODO: Add ability to link multiple sign in methods.
+      </p>
+
+    </div>
 
 
     <div id="resetPassword" style="display:none">
-      <p id = "resetPasswordPrompt">
-        If you would like to reset your password, click <span style="text-decoration: underline" id="resetPasswordLink" > here</a>.
+      <p id="resetPasswordPrompt">
+        If you would like to reset your password, click <button class="asText" id="resetPasswordLink">here</button>.
       </p>
-      <form id = "resetPasswordForm" style="display:none">
+      <form id="resetPasswordForm" style="display:none">
         Please enter your old and new passwords below: <br>
-        <input id="oldPassword" type="password" placeholder="Old Password" required/> <br>
-        <input id="newPassword" type="password" placeholder="New Password" required/> <br>
-        <input id="resetPasswordSubmitButton" type="submit" value="Reset Password"/> <br>
+        <input id="oldPassword" type="password" placeholder="Old Password" required /> <br>
+        <input id="newPassword" type="password" placeholder="New Password" required /> <br>
+        <input id="resetPasswordSubmitButton" type="submit" value="Reset Password" /> <br>
       </form>
 
-      <p id = "resetPasswordSuccess" style="display:none">
+      <p id="resetPasswordSuccess" style="display:none">
         Your updated password has been accepted! Thank you.
       </p>
 
-      <p id = "resetPasswordFailure" style="display:none">
-        Your new password was not accepted. Make sure your old password was correct and your new password is complex enough.
+      <p id="resetPasswordFailure" style="display:none">
+        Your new password was not accepted. Make sure your old password was correct and your new password is complex
+        enough.
       </p>
     </div>
 
 
 
     <p id="secretPageText" style="display:none">
-      Click <span id="secretPageLink" style="text-decoration: underline">here</span> to view a secret page!
+      Click <a href="/signed_in.html"">here</a> to view a secret page!
     </p>
 
+    <button id="signoutSubmitButton">Logout</button>
+
+  </main>
 
 
-    <!-- Load JS after html file has been loaded fully -->
-    <script type="text/javascript" src="./app.js"></script>
-  </body>
+
+  <!-- Load JS after html file has been loaded fully -->
+  <script type="text/javascript" src="js/materialize.js"></script>
+  <script type="
+        text/javascript" src="./app.js">
+  </script>
+</body>
+
 </html>
