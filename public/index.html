@@ -35,7 +35,7 @@
       <p id = "resetPasswordPrompt">
         If you would like to reset your password, click <span style="text-decoration: underline" id="resetPasswordLink" > here</a>.
       </p>
-      <form name = "resetPasswordForm" style="display:none">
+      <form id = "resetPasswordForm" style="display:none">
         Please enter your old and new passwords below: <br>
         <input id="oldPassword" type="password" placeholder="Old Password" required/> <br>
         <input id="newPassword" type="password" placeholder="New Password" required/> <br>
@@ -50,6 +50,8 @@
         Your new password was not accepted. Make sure your old password was correct and your new password is complex enough.
       </p>
     </div>
+
+    
 
     <!-- Load JS after html file has been loaded fully -->
     <script type="text/javascript" src="./app.js"></script>

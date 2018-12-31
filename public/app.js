@@ -6,11 +6,11 @@ var config = {
     projectId: "websec-proj2",
     storageBucket: "websec-proj2.appspot.com",
     messagingSenderId: "1093643732220"
-  };
+};
 //firebase.initializeApp(config);
 
 
-window.onload = function (){
+window.onload = function () {
     $("#welcomeMessage").hide();
     $("#signout").hide();
 
@@ -19,15 +19,15 @@ window.onload = function (){
 }
 
 // wait until dom is loaded
-$(function(){
+$(function () {
 
-    $("#loginSubmitButton").click(function(event){
+    $("#loginSubmitButton").click(function (event) {
         event.preventDefault();
         console.log("Signing in existing user...")
         console.log($('#emailInput').val());
         console.log($('#password').val());
         //firebase.initializeApp(config); // init firebase
-        firebase.auth().signInWithEmailAndPassword($('#emailInput').val().toString(), $('#passwordInput').val()).catch(function(error){
+        firebase.auth().signInWithEmailAndPassword($('#emailInput').val().toString(), $('#passwordInput').val()).catch(function (error) {
             var errorCode = error.code;
             var errorMessage = error.message;
             console.log(errorCode);
@@ -39,13 +39,13 @@ $(function(){
     });
 
 
-    $("#registerSubmitButton").click(function(event){
+    $("#registerSubmitButton").click(function (event) {
         event.preventDefault();
         console.log("Registering user...");
         console.log($('#emailInput').val());
         console.log($('#passwordInput').val());
         //firebase.initializeApp(config); // init firebase
-        firebase.auth().createUserWithEmailAndPassword($('#emailInput').val().toString(), $('#passwordInput').val()).catch(function(error){
+        firebase.auth().createUserWithEmailAndPassword($('#emailInput').val().toString(), $('#passwordInput').val()).catch(function (error) {
             var errorCode = error.code;
             var errorMessage = error.message;
             console.log($('#emailInput').val());
@@ -58,11 +58,11 @@ $(function(){
         });
     });
 
-    $("#signoutSubmitButton").click(function(event){
+    $("#signoutSubmitButton").click(function (event) {
         event.preventDefault();
         console.log("Logging current user out...");
 
-        firebase.auth().signOut().catch(function(error){
+        firebase.auth().signOut().catch(function (error) {
             var errorCode = error.code;
             var errorMessage = error.message;
             console.log(errorCode);
@@ -72,18 +72,46 @@ $(function(){
     });
 
 
-    $("#resetPasswordLink").click(function(event){
+    $("#resetPasswordLink").click(function (event) {
         console.log("Enable resetting password");
 
         $("#resetPasswordPrompt").hide();
         $("#resetPasswordForm").show();
     });
 
+
+    $("#resetPasswordSubmitButton").click(function (event) {
+        event.preventDefault();
+        console.log("Attempting to reset user password...");
+
+        const user = firebase.auth().currentUser;
+        const credential = firebase.auth.EmailAuthProvider.credential(
+            user.email,
+            $("#oldPassword").val()
+        );
+
+        user.reauthenticateAndRetrieveDataWithCredential(credential).then(function () {
+            // user passed in a correct oldpassword, now change the password.
+            user.updatePassword($("#newPassword").val()).then(function () {
+                console.log("Password updated succesfully!");
+                $("#resetPasswordSuccess").show();
+                $("#resetPasswordFailure").hide();
+                $("#resetPasswordForm").hide();
+
+            }).catch(function (error) {
+                console.log("Password update failed!");
+                $("#resetPasswordFailure").show();
+            });
+        }).catch(function (error) {
+            console.log("Could not reset password - authentication failed")
+            $("#resetPasswordFailure").show();
+        });
+    });
+
     // handle user signin/outs
-    firebase.auth().onAuthStateChanged(function(user){
+    firebase.auth().onAuthStateChanged(function (user) {
         // user just signed in
-        if(user)
-        {
+        if (user) {
             console.log("Welcome " + user.email + "!");
             // set username id values to th email (for now)
             $("#userName").text(user.email);
@@ -114,8 +142,8 @@ $(function(){
             $("#resetPassword").hide();
             // bring back the sign in form
             $("#registerForm").show();
-
         }
     });
+
 
 });
